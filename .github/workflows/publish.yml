@@ -88,4 +88,4 @@ jobs:
           build-args: |
             BASE_IMAGE=ghcr.io/embeddedcontainers/arduino:base
             CORE=${{ matrix.cores.id }}
-            URL=${{ matrix.cores.url }}
+            URL="${{ matrix.cores.url }}"

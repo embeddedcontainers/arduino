@@ -1,0 +1,91 @@
+name: Arduino development containers
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  base:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into GitHub Container Registry
+        # if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push base image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./arduino-base/Dockerfile
+          # push: ${{ github.event_name != 'pull_request' }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          provenance: false
+          tags: ghcr.io/${{ github.repository_owner }}/arduino:base
+
+  cores:
+    needs: [base]
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        cores: [
+          { id: "arduino:avr", alias: "avr", url: "" },
+          { id: "arduino:esp32", alias: "esp32", url: "" },
+          { id: "arduino:sam", alias: "sam", url: "" },
+          { id: "arduino:samd", alias: "samd", url: "" }
+        ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into GitHub Container Registry
+        # if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push arch-specific images
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./arduino/Dockerfile
+          # push: ${{ github.event_name != 'pull_request' }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          provenance: false
+          tags: ghcr.io/${{ github.repository_owner }}/arduino:${{ matrix.alias }}
+          build-args: |
+            BASE_IMAGE=ghcr.io/embeddedcontainers/arduino:base
+            CORE=${{ matrix.cores.id }}
+            URL=${{ matrix.cores.url }}

@@ -1,6 +1,6 @@
 ARG BASE_IMAGE="arduino:base"
 ARG URL
-ARG CORE=arduino:avr
+ARG CORE="arduino:avr"
 
 FROM ${BASE_IMAGE}
 
@@ -16,4 +16,4 @@ RUN \
 
 RUN \
   arduino-cli core update-index ${URL} \
-  && arduino-cli core install "${CORE}"
+  && arduino-cli core install ${CORE}

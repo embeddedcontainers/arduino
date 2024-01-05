@@ -16,4 +16,4 @@ RUN \
 
 RUN \
   arduino-cli core update-index ${URL} \
-  && arduino-cli core install ${CORE}
+  && arduino-cli core install "${CORE}"

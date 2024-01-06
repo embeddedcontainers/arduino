@@ -91,4 +91,5 @@ jobs:
           build-args: |
             BASE_IMAGE=ghcr.io/embeddedcontainers/arduino:base
             CORE=${{ matrix.cores.id }}
+            VERSION=${{ matrix.cores.version }}
             URL=${{ matrix.cores.url }}

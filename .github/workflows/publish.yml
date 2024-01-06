@@ -56,7 +56,10 @@ jobs:
           { id: "arduino:avr", alias: "avr", vendor: "arduino", version: "latest", url: "" },
           { id: "arduino:esp32", alias: "esp32", vendor: "arduino", version: "latest", url: "" },
           { id: "arduino:sam", alias: "sam", vendor: "arduino", version: "latest", url: "" },
-          { id: "arduino:samd", alias: "samd", vendor: "arduino", version: latest, url: "" }
+          { id: "arduino:samd", alias: "samd", vendor: "arduino", version: latest, url: "" },
+          { id: "adafruit:avr", alias: "avr", vendor: "adafruit", version: latest, url: "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" },
+          { id: "adafruit:nrf52", alias: "nrf52", vendor: "adafruit", version: latest, url: "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" },
+          { id: "adafruit:samd", alias: "samd", vendor: "adafruit", version: latest, url: "https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" },
         ]
 
     steps:

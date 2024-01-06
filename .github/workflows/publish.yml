@@ -53,10 +53,10 @@ jobs:
     strategy:
       matrix:
         cores: [
-          { id: "arduino:avr", alias: "avr", url: "" },
-          { id: "arduino:esp32", alias: "esp32", url: "" },
-          { id: "arduino:sam", alias: "sam", url: "" },
-          { id: "arduino:samd", alias: "samd", url: "" }
+          { id: "arduino:avr", alias: "avr"},
+          { id: "arduino:esp32", alias: "esp32"},
+          { id: "arduino:sam", alias: "sam"},
+          { id: "arduino:samd", alias: "samd"}
         ]
 
     steps:
@@ -87,5 +87,5 @@ jobs:
           tags: ghcr.io/${{ github.repository_owner }}/arduino:${{ matrix.cores.alias }}
           build-args: |
             BASE_IMAGE=ghcr.io/embeddedcontainers/arduino:base
-            CORE="${{ matrix.cores.id }}"
-            URL="${{ matrix.cores.url }}"
+            CORE=${{ matrix.cores.id }}
+            URL=${{ matrix.cores.url }}

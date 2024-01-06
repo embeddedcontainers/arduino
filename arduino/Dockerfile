@@ -1,8 +1,9 @@
-ARG BASE_IMAGE="arduino:base"
-ARG URL
-ARG CORE="arduino:avr"
+ARG BASE_IMAGE
 
 FROM ${BASE_IMAGE}
+
+ARG URL
+ARG CORE
 
 # OS dependencies and packages
 

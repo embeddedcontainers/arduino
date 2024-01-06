@@ -1,9 +1,11 @@
 ARG BASE_IMAGE
+ARG CORE
+ARG URL
 
 FROM ${BASE_IMAGE}
 
-ARG URL
 ARG CORE
+ARG URL
 
 # OS dependencies and packages
 

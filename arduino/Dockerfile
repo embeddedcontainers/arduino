@@ -20,7 +20,8 @@ RUN \
 # Arduino CLI
 
 RUN \
-  if [ "$URL" != "" ] ; then export URL_FINAL="--additional-urls ${URL}" ; else export URL_FINAL="" ; fi \
+  arduino-cli config init \
+  && if [ "$URL" != "" ] ; then arduino-cli config add board_manager.additional_urls ${URL} ; fi \
   && if [ "$VERSION" != "latest" ] ; then export CORE_FINAL="${CORE}@${VERSION}" ; else export CORE_FINAL="${CORE}" ; fi \
-  && arduino-cli core update-index ${URL_FINAL} \
-  && arduino-cli core install ${CORE_FINAL} ${URL_FINAL}
+  && arduino-cli core update-index \
+  && arduino-cli core install ${CORE_FINAL}
